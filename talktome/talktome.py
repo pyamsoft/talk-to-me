@@ -9,12 +9,14 @@ class TalkToMe:
     @classmethod
     def _on_generate_tts(
         cls,
+        work_folder: Path,
         output_file: Path,
         langauge: str,
         voice_model: str,
         chapter: Chapter,
     ):
         TextToSpeech.text_to_speech(
+            work_folder=work_folder,
             output_file=output_file,
             language=langauge,
             voice_model=voice_model,

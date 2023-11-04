@@ -151,30 +151,29 @@ class TextToSpeech:
     @classmethod
     def _cleanup(
         cls,
-        work_folder: Optional[Path],
+        work_folder: Path,
         one_big_file: Optional[str],
     ):
+        # Remove work folder
+        shutil.rmtree(
+            work_folder,
+            ignore_errors=True,
+        )
+
         if one_big_file:
             # Remove big WAV
             Path(one_big_file).unlink(missing_ok=True)
 
-        if work_folder:
-            # Remove work folder
-            shutil.rmtree(
-                work_folder,
-                ignore_errors=True,
-            )
-
     @classmethod
     def text_to_speech(
         cls,
+        work_folder: Path,
         output_file: Path,
         language: str,
         voice_model: str,
         chapter: Chapter,
     ):
         one_big_file: Optional[str] = None
-        work_folder: Optional[Path] = None
         try:
             # Adjust this value based on your testing
             max_chars: int = 1800 if language.startswith("zh") else 3000
@@ -186,7 +185,6 @@ class TextToSpeech:
             )
 
             # Make the work directory
-            work_folder = output_file.with_suffix(".work")
             work_folder.mkdir(
                 mode=0o755,
                 parents=True,

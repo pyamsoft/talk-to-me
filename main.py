@@ -75,7 +75,7 @@ class Main:
                         chapter_start=1,
                         chapter_end=-1,
                         voice_model=str(voice_model),
-                        output_folder=Path(file_path),
+                        output_folder=Path(file_path).parent,
                     )
                     status.write("\n")
                     status.flush()

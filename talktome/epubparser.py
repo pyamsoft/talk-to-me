@@ -175,13 +175,12 @@ class EpubParser:
         chapter_start: int,
         chapter_end: int,
         remove_endnotes: bool,
-        on_generate_media: Callable[[Path, str, str, Chapter], None],
+        on_generate_media: Callable[[Path, Path, str, str, Chapter], None],
     ) -> None:
+        # Parse input
         book = epub.read_epub(input_file)
-
         chapters = cls._extract_chapters(book, newline_mode, remove_endnotes)
         chapter_count = len(chapters)
-
         chapter_range = cls._get_chapter_range(
             chapter_count=chapter_count,
             start=chapter_start,
@@ -189,8 +188,9 @@ class EpubParser:
         )
         book_info = cls._extract_book_info(book)
 
-        os.makedirs(output_folder, exist_ok=True)
-
+        # Prepare output
+        work_folder = Path(f"{str(output_folder)}.work")
+        os.makedirs(work_folder, exist_ok=True)
         cls._log(f"Book: {book_info}.")
         cls._log(f"Chapters count: {chapter_count}.")
         cls._log(f"Converting chapters {chapter_start} to {chapter_end}.")
@@ -210,6 +210,7 @@ class EpubParser:
                 f"{chapter_number}/{chapter_count}: {chapter_title} => {output_file}"
             )
             on_generate_media(
+                work_folder,
                 output_file,
                 language,
                 voice_model,
