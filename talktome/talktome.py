@@ -3,7 +3,8 @@ from pathlib import Path
 from typing import Optional, Any
 
 from talktome.epubparser import EpubParser
-from talktome.models import Chapter
+from talktome.models import Chapter, BookInfo
+from talktome.tagger import AudioTagger
 from talktome.tts import TextToSpeech
 
 
@@ -19,6 +20,7 @@ class TalkToMe:
         output_file: Path,
         langauge: str,
         voice_model: str,
+        book: BookInfo,
         chapter: Chapter,
     ):
         TextToSpeech.text_to_speech(
@@ -28,6 +30,7 @@ class TalkToMe:
             voice_model=voice_model,
             chapter=chapter,
         )
+        AudioTagger.save_tags(output_file, book, chapter)
 
     @classmethod
     def _cleanup(cls, work_folder: Optional[Path]):

@@ -1,4 +1,3 @@
-import os
 import re
 from pathlib import Path
 
@@ -176,10 +175,15 @@ class EpubParser:
         chapter_start: int,
         chapter_end: int,
         remove_endnotes: bool,
-        on_generate_media: Callable[[Path, Path, str, str, Chapter], None],
+        on_generate_media: Callable[[Path, Path, str, str, BookInfo, Chapter], None],
     ) -> None:
         # Parse input
-        book = epub.read_epub(input_file)
+        book = epub.read_epub(
+            input_file,
+            options={
+                "ignore_ncx": True,
+            },
+        )
         chapters = cls._extract_chapters(book, newline_mode, remove_endnotes)
         chapter_count = len(chapters)
         chapter_range = cls._get_chapter_range(
@@ -212,5 +216,6 @@ class EpubParser:
                 output_file,
                 language,
                 voice_model,
+                book_info,
                 chapter,
             )

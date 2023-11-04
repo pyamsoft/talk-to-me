@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import shutil
 import wave
 from pathlib import Path
 from typing import List, NamedTuple, Optional, Any
