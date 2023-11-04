@@ -169,6 +169,7 @@ class EpubParser:
         cls,
         input_file: str,
         output_folder: Path,
+        work_folder: Path,
         language: str,
         voice_model: str,
         newline_mode: str,
@@ -188,9 +189,6 @@ class EpubParser:
         )
         book_info = cls._extract_book_info(book)
 
-        # Prepare output
-        work_folder = Path(f"{str(output_folder)}.work")
-        os.makedirs(work_folder, exist_ok=True)
         cls._log(f"Book: {book_info}.")
         cls._log(f"Chapters count: {chapter_count}.")
         cls._log(f"Converting chapters {chapter_start} to {chapter_end}.")

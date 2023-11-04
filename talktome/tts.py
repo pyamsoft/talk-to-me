@@ -2,7 +2,7 @@
 import shutil
 import wave
 from pathlib import Path
-from typing import List, NamedTuple, Optional
+from typing import List, NamedTuple, Optional, Any
 from pydub import AudioSegment
 import sh
 
@@ -10,6 +10,10 @@ from talktome.models import Chapter
 
 
 class TextToSpeech:
+    @classmethod
+    def _log(cls, *args: Any):
+        print("[TextToSpeech]: ", *args)
+
     @classmethod
     def _is_special_char(cls, char: str) -> bool:
         """
@@ -151,16 +155,11 @@ class TextToSpeech:
     @classmethod
     def _cleanup(
         cls,
-        work_folder: Path,
         one_big_file: Optional[str],
     ):
-        # Remove work folder
-        shutil.rmtree(
-            work_folder,
-            ignore_errors=True,
-        )
-
+        cls._log("Clean up")
         if one_big_file:
+            cls._log("Remove one big file: ", one_big_file)
             # Remove big WAV
             Path(one_big_file).unlink(missing_ok=True)
 
@@ -184,12 +183,9 @@ class TextToSpeech:
                 language=language,
             )
 
-            # Make the work directory
-            work_folder.mkdir(
-                mode=0o755,
-                parents=True,
-                exist_ok=True,
-            )
+            if len(text_chunks) <= 0:
+                cls._log("No text chunks for chapter", chapter)
+                return
 
             wav_files = cls._chunks_to_wavs(
                 work_folder,
@@ -203,4 +199,4 @@ class TextToSpeech:
             # Convert the WAV to MP3
             cls._wav_to_mp3(output_file, one_big_file)
         finally:
-            cls._cleanup(work_folder, one_big_file)
+            cls._cleanup(one_big_file)
