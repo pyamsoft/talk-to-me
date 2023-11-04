@@ -11,10 +11,6 @@ RUN apt -y update && apt -y upgrade && apt -y install curl build-essential llvm 
 # Install poetry
 RUN curl -sSL 'https://install.python-poetry.org' | python3 -
 
-# Install voice model
-RUN curl -s 'https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/lessac/medium/en_US-lessac-medium.onnx' -o en_US-lessac-medium.onnx
-RUN curl -s 'https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/lessac/medium/en_US-lessac-medium.onnx.json' -o en_US-lessac-medium.onnx.json
-
 # Copy source
 COPY main.py ./
 COPY pyproject.toml ./

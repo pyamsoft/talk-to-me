@@ -58,7 +58,8 @@ class Main:
         lockfile: Path,
         paths: List[str],
     ):
-        voice_model = Path("en_US-lessac-medium.onnx")
+        voice_model = Path("/models") / "en_US-lessac-medium.onnx"
+
         with lockfile.open(mode="a") as status:
             model = TalkToMe()
             try:
