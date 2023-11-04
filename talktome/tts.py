@@ -101,8 +101,12 @@ class TextToSpeech:
         # Run the script, output a wav file
         # noinspection PyUnresolvedReferences
         modeled = sh.piper.bake(
+            # Voice model
             model=onnx_file,
+            # Output to WAV
             output_file=output_file,
+            # Silence after sentence
+            sentence_silence="1.25",
         )
 
         # Pipe the text to piper via stdin
