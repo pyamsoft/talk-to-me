@@ -104,7 +104,9 @@ class TextToSpeech:
             model=onnx_file,
             output_file=output_file,
         )
-        modeled(chunk)
+
+        # Pipe the text to piper via stdin
+        modeled(_in=chunk)
 
     @classmethod
     def _chunks_to_wavs(
