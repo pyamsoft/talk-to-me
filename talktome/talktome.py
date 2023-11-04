@@ -55,7 +55,7 @@ class TalkToMe:
         work_folder: Optional[Path] = None
         try:
             # Prepare output
-            work_folder = Path(f"{str(output_folder)}.work")
+            work_folder = Path(f"{str(input_file)}.work")
 
             # Make the work directory
             work_folder.mkdir(
