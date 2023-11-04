@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Add to path
+export PATH="/root/.local/bin:${PATH}"
+
+# Install first
+poetry install --no-root || {
+  printf -- 'Failed to install poetry project.\n'
+  exit 1
+}
+
+# Run and pass arguments
+exec poetry run python3 -u main.py "$@"

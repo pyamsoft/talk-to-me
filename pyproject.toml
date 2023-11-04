@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "talk-to-me"
+version = "0.0.1"
+description = "Generate MP3 auto from EPUB files"
+authors = ["pyamsoft <developer.pyamsoft@gmail.com>"]
+license = "Apache-2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.8.1,<4.0"
+beautifulsoup4 = "==4.12.2"
+piper-tts = "==1.2.0"
+pydub = "==0.25.1"
+EbookLib = "==0.18"
+lxml = "==4.9.2"
+mutagen = "==1.46.0"
+sh = "==2.0.6"
+
+[tool.poetry.group.dev.dependencies]
+black = {extras = ["d"], version = "==23.10.1"}
+setuptools = "==68.2.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

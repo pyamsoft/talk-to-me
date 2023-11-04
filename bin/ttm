@@ -1,0 +1,15 @@
+#!/bin/sh
+
+readonly _cmd="podman"
+
+# Mount a data directory for the whisper model
+# Mount a cache directory for the pypoetry deps
+mkdir -p "./data"
+mkdir -p "./cache"
+
+# shellcheck disable=SC2086
+exec ${_cmd} run --rm -i -t \
+  --mount "type=bind,source=./data,target=/talk-to-me/data" \
+  --mount "type=bind,source=./cache,target=/root/.cache" \
+  --mount "type=bind,source=./books,target=/books" \
+  localhost/pyamsoft/talk-to-me "$@"
