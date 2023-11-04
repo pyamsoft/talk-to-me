@@ -23,14 +23,14 @@ class TalkToMe:
         book: BookInfo,
         chapter: Chapter,
     ):
-        TextToSpeech.text_to_speech(
+        if TextToSpeech.text_to_speech(
             work_folder=work_folder,
             output_file=output_file,
             language=langauge,
             voice_model=voice_model,
             chapter=chapter,
-        )
-        AudioTagger.save_tags(output_file, book, chapter)
+        ):
+            AudioTagger.save_tags(output_file, book, chapter)
 
     @classmethod
     def _cleanup(cls, work_folder: Optional[Path]):

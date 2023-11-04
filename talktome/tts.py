@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import wave
 from pathlib import Path
+from traceback import print_exc
 from typing import List, NamedTuple, Optional, Any
 from pydub import AudioSegment
 import sh
@@ -176,8 +177,9 @@ class TextToSpeech:
         language: str,
         voice_model: str,
         chapter: Chapter,
-    ):
+    ) -> bool:
         one_big_file: Optional[str] = None
+        # noinspection PyBroadException
         try:
             # Adjust this value based on your testing
             max_chars: int = 1800 if language.startswith("zh") else 3000
@@ -190,7 +192,7 @@ class TextToSpeech:
 
             if len(text_chunks) <= 0:
                 cls._log("No text chunks for chapter", chapter)
-                return
+                return False
 
             wav_files = cls._chunks_to_wavs(
                 work_folder,
@@ -203,5 +205,9 @@ class TextToSpeech:
 
             # Convert the WAV to MP3
             cls._wav_to_mp3(output_file, one_big_file)
+            return True
+        except Exception as _:
+            print_exc()
+            return False
         finally:
             cls._cleanup(one_big_file)
