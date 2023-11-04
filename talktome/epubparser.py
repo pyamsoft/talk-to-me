@@ -49,7 +49,7 @@ class EpubParser:
         newline_mode: str,
         remove_endnotes: bool,
     ) -> Chapter:
-        soup = BeautifulSoup(content, "lxml")
+        soup = BeautifulSoup(content, features="xml")
         try:
             cleaned_text = cls._extract_text_for_chapter(
                 soup,
