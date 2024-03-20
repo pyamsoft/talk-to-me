@@ -17,7 +17,7 @@ mutagen = "==1.46.0"
 sh = "==2.0.6"
 
 [tool.poetry.group.dev.dependencies]
-black = {extras = ["d"], version = "==23.10.1"}
+black = {extras = ["d"], version = "==24.3.0"}
 setuptools = "==68.2.2"
 
 [build-system]
